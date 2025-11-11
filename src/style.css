@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: Rgothic;
+    src: url(./assets/fonts/Angel\ rhapsody.ttf);
+}
+
+@theme {
+    --font-gothic-rhapsody: Rgothic, sans-serif;
+}
