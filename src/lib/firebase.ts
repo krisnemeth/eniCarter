@@ -3,24 +3,33 @@ import { getFirestore } from 'firebase/firestore'
 import { getAnalytics } from 'firebase/analytics'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB2-QdC0snFl_94oci3dmEL34IgoruRWBU",
-  authDomain: "enicarter.firebaseapp.com",
-  projectId: "enicarter",
-  storageBucket: "enicarter.firebasestorage.app",
-  messagingSenderId: "396606781521",
-  appId: "1:396606781521:web:6f0a1bb41dc0d4585b2070",
-  measurementId: "G-9SNQBE7CBN"
-};
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY as string,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN as string,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID as string,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET as string,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID as string,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID as string,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID as string
+}
 
 function getFirebaseApp(): FirebaseApp {
-  if (!getApps().length) {
+  if (getApps().length === 0) {
     return initializeApp(firebaseConfig)
   }
   return getApp()
 }
 
-export const app = initializeApp(firebaseConfig);
+export const app = getFirebaseApp()
 export const db = getFirestore(app)
-export const analytics = getAnalytics(app)
+
+let analytics = null
+try {
+  if (typeof window !== 'undefined') {
+    analytics = getAnalytics(app)
+  }
+} catch {
+  analytics = null
+}
+export { analytics }
 
 
