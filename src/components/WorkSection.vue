@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import SectionTitle from './SectionTitle.vue'
 import ImageCarouselFullScreen from './ImageCarouselFullScreen.vue'
+import Button from './Button.vue'
 
 // Import all images dynamically
 const finishedTattooImages = [
@@ -53,40 +54,32 @@ const designs = computed(() => {
 </script>
 
 <template>
-  <section id="work" class="h-full lg:h-screen overflow-x-hidden pt-16 md:py-24">
+  <section id="work" class="h-full lg:h-screen overflow-hidden pt-16 md:py-24">
     <div class="max-w-6xl mx-auto px-4 w-full">
       
       <SectionTitle title="Munkáim" />
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 items-center justify-center w-full gap-4 md:gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 items-center justify-center w-full gap-4 md:gap-8">
         
         <div class="flex flex-col items-center justify-center w-full h-full">
-          <div class="w-full h-full max-h-[600px]">
+          <div class="w-full h-full max-h-[400px]">
             <ImageCarouselFullScreen :images="TattooImages" caption="Kész tetoválások" />
           </div>
         </div>
         <div class="md:hidden"></div>
 
         <div class="flex flex-col items-center justify-center w-full h-full">
-          <div class="w-full h-full max-h-[600px]">
+          <div class="w-full h-full max-h-[400px]">
             <ImageCarouselFullScreen :images="designs" caption="Egyedi minták" />
           </div>
         </div>
         
       </div>
 
-      <div class="flex flex-col text-justify w-full h-full md:text-center">
-        <p class="mt-4 md:mt-8 text-xs md:text-sm text-gray-700">Időpontegyeztetéshez és további információért írj emailt az <span class="font-bold text-xs md:text-sm text-gray-950">enitatts@gmail.com</span>-ra vagy klikkelj a gombra, és hagyj egy üzenetet!</p>
+      <div class="flex flex-col text-justify lg:max-w-lg h-full">
+          <p class="mt-4 md:mt-8 text-xs md:text-sm text-gray-700">Időpontegyeztetéshez és további információért írj emailt az <span class="font-bold text-xs md:text-sm text-gray-950">enitatts@gmail.com</span>-ra vagy klikkelj a gombra, és hagyj egy üzenetet!</p>
+          <Button link="#contact" buttonText="Időpontegyeztetés"/>
       </div>
-
-      <div class="button flex flex-col items-center justify-center">
-          <div class="mt-6 flex items-center gap-3">
-            <a href="#contact" class="px-5 py-2.5 rounded-md bg-gray-950 text-slate-200 border border-slate-200 shadow-md hover:-translate-y-0.5 hover:shadow-xl transition text-sm">Időpontegyeztetés</a>
-          </div>
-        </div>
-
-
-      
     </div>
   </section>
 </template>

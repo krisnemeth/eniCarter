@@ -1,4 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Comforter+Brush&display=swap');
 @import "tailwindcss";
+
 
 @font-face {
     font-family: Rgothic;
@@ -6,5 +8,6 @@
 }
 
 @theme {
+    --font-comforter-brush: 'Comforter Brush', cursive;
     --font-gothic-rhapsody: Rgothic, sans-serif;
 }

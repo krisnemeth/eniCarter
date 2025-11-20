@@ -6,11 +6,21 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
+# ignore local env file with secrets
+.env.local
 node_modules
 dist
 dist-ssr
 *.local
+
+# .env.local (add to .gitignore)
+VITE_FIREBASE_API_KEY=your_new_api_key_here
+VITE_FIREBASE_AUTH_DOMAIN=enicarter.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=enicarter
+VITE_FIREBASE_STORAGE_BUCKET=enicarter.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=396606781521
+VITE_FIREBASE_APP_ID=1:396606781521:web:6f0a1bb41dc0d4585b2070
+VITE_FIREBASE_MEASUREMENT_ID=G-9SNQBE7CBN
 
 # Editor directories and files
 .vscode/*

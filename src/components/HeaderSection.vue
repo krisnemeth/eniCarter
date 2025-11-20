@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import Button from './Button.vue'
 
 const mobileBgUrl = new URL('../assets/img/Vertical/KATA4524.jpg', import.meta.url).href
 const desktopBgUrl = new URL('../assets/img/Vertical/About/KATA4614.jpg', import.meta.url).href
@@ -51,10 +52,8 @@ const headerBgUrl = computed(() => (isDesktop.value ? desktopBgUrl : mobileBgUrl
           <h2 class="text-2xl md:text-4xl font-gothic-rhapsody text-slate-200 font-bold tracking-wide text-shadow-gray-950 text-shadow-lg">Tattoo Artist</h2>
         </div>
 
-        <div class="button flex flex-col items-center justify-center">
-          <div class="mt-6 flex items-center gap-3">
-            <a href="#work" class="px-5 py-2.5 rounded-md bg-gray-950 text-slate-200 border border-slate-200 shadow-md hover:-translate-y-0.5 hover:shadow-xl transition">Munkáim</a>
-          </div>
+        <div class="flex flex-col items-center justify-center">
+          <Button link="#work" button-text="Munkáim"/>
         </div>
 
       </div>
