@@ -113,7 +113,7 @@ const contactBgUrl = computed(() => (isDesktop.value ? desktopBgUrl : mobileBgUr
 
      <div class="grid grid-cols-1 md:grid-cols-2 items-center justify-center w-full gap-4 md:gap-8 mb-6 md:mb-0">
 
-      <div class="flex flex-col items-center justify-center w-full h-96 bg-gray-200 rounded-lg  border border-gray-900 p-3">
+      <div class="flex flex-col items-center justify-center w-full h-full bg-gray-200 rounded-lg  border border-gray-900 p-3">
         <form class="w-full space-y-3" @submit.prevent="onSubmit">
           <div>
             <label class="block text-xs font-medium text-gray-500">Név</label>
@@ -140,7 +140,7 @@ const contactBgUrl = computed(() => (isDesktop.value ? desktopBgUrl : mobileBgUr
       </div>
 
       <div class="hidden md:flex flex-col items-center justify-center w-full h-full">
-        <img src="../assets/img/Vertical/KATA3795.jpg" alt="Image of Lucky Cat" class="h-96 w-full object-cover object-[25%_75%] rounded-xl overflow-hidden border border-gray-900" />
+        <img src="../assets/img/Vertical/KATA3795.jpg" alt="Image of Lucky Cat" class="h-[450px] w-full object-cover object-[25%_75%] rounded-xl overflow-hidden border border-gray-900" />
       </div>
     </div>
     </div>

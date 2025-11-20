@@ -37,7 +37,7 @@ const images = computed(() => {
           </p>
           <p class="mt-2 text-xs text-gray-700 md:text-base md:mt-6">Számomra kiemelten fontos, hogy a vendég biztonságban és oldott hangulatban érezze magát a közös munka során. Nagy hangsúlyt fektetek a higiéniára, a gondos előkészítésre és arra, hogy minden alkalommal a lehető legmagasabb minőségű munkát adjam ki a kezemből. Hiszem, hogy a tetoválás nem csupán dísz, hanem egy személyes történet lenyomata is, amelyet megtiszteltetés számomra életre kelteni.
           </p>
-          <p class="mt-2 text-2xl text-gray-700 md:text-3xl md:mt-6 font-comforter-brush  ">Kocsis Enikő
+          <p class="mt-2 text-2xl text-gray-950 md:text-3xl md:mt-6 font-comforter-brush  ">Kocsis Enikő
           </p>
           
         </div>

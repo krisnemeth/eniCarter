@@ -20,6 +20,7 @@ function getFirebaseApp(): FirebaseApp {
 }
 
 export const app = getFirebaseApp()
+console.debug('Firebase initialized for project:', import.meta.env.VITE_FIREBASE_PROJECT_ID) // <--- safe check (no apiKey)
 export const db = getFirestore(app)
 
 let analytics = null
