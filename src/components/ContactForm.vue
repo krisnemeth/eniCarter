@@ -37,13 +37,17 @@ async function onSubmit() {
 
   loading.value = true
   try {
-    const { error: insertError } = await supabase.from('contacts').insert({
+    const payload = {
       name: state.value.name.trim(),
       email: state.value.email.trim(),
       message: state.value.message.trim(),
-    })
+    }
 
+    const { error: insertError } = await supabase.from('contacts').insert(payload)
     if (insertError) throw insertError
+
+    // Fire email notification — failure does not block the success response
+    supabase.functions.invoke('notify-contact', { body: payload }).catch(() => {})
 
     state.value = { name: '', email: '', message: '' }
     success.value = 'Köszönöm, hogy felvetted velem a kapcsolatot! Hamarosan válaszolok.'
