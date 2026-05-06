@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
-import { db } from '../lib/firebase'
+import { supabase } from '../lib/supabase'
 import SectionTitle from './SectionTitle.vue'
 
 type State = {
@@ -38,23 +37,14 @@ async function onSubmit() {
 
   loading.value = true
   try {
-    await addDoc(collection(db, 'contacts'), {
+    const { error: insertError } = await supabase.from('contacts').insert({
       name: state.value.name.trim(),
       email: state.value.email.trim(),
       message: state.value.message.trim(),
-      createdAt: serverTimestamp(),
     })
 
-    const toEmail = import.meta.env.VITE_CONTACT_NOTIFY_EMAIL as string | undefined
-    if (toEmail) {
-      const subject = `New contact from ${state.value.name}`
-      const text = `Name: ${state.value.name}\nEmail: ${state.value.email}\n\n${state.value.message}`
-      const html = `<p><strong>Name:</strong> ${state.value.name}</p><p><strong>Email:</strong> ${state.value.email}</p><p>${state.value.message.replace(/\n/g, '<br/>')}</p>`
-      await addDoc(collection(db, 'mail'), {
-        to: [toEmail],
-        message: { subject, text, html },
-      })
-    }
+    if (insertError) throw insertError
+
     state.value = { name: '', email: '', message: '' }
     success.value = 'Köszönöm, hogy felvetted velem a kapcsolatot! Hamarosan válaszolok.'
   } catch (e: any) {
@@ -65,9 +55,6 @@ async function onSubmit() {
 }
 
 /* Responsive background image */
-const mobileBgUrl = new URL('../assets/img/Vertical/Contact/KATA_contact_portrait.jpg', import.meta.url).href
-const desktopBgUrl = new URL('../assets/img/Horizontal/Contact/KATA_contact_landscape.jpg', import.meta.url).href
-
 const isDesktop = ref(false)
 
 function updateIsDesktop() {
@@ -100,8 +87,6 @@ onUnmounted(() => {
     ;(mql as any).removeListener(updateIsDesktop)
   }
 })
-
-const contactBgUrl = computed(() => (isDesktop.value ? desktopBgUrl : mobileBgUrl))
 </script>
 
 <template>
@@ -149,5 +134,3 @@ const contactBgUrl = computed(() => (isDesktop.value ? desktopBgUrl : mobileBgUr
 
 <style scoped>
 </style>
-
-

@@ -26,6 +26,7 @@ function close() {
         <a href="#work" class="text-slate-200 border-b border-transparent hover:border-b hover:border-gray-200 hover:translate-y-0" @click="close">Munkáim</a>
         <a href="#about" class="text-slate-200 border-b border-transparent hover:border-b hover:border-gray-200 hover:translate-y-0" @click="close">Rólam</a>
         <a href="#contact" class="text-slate-200 border-b border-transparent hover:border-b hover:border-gray-200 hover:translate-y-0" @click="close">Kapcsolat</a>
+        <a href="#blog" class="text-slate-200 border-b border-transparent hover:border-b hover:border-gray-200 hover:translate-y-0" @click="close">Blog</a>
       </div>
     </div>
 
@@ -38,7 +39,8 @@ function close() {
         <a href="#" class="text-slate-200 hover:bg-gray-400 pb-1 border-b border-gray-200/20" @click="close">Kezdőlap</a>
         <a href="#work" class="text-slate-200 hover:bg-gray-400 pb-1 border-b border-gray-200/20" @click="close">Munkáim</a>
         <a href="#about" class="text-slate-200 hover:bg-gray-400 pb-1 border-b border-gray-200/20" @click="close">Rólam</a>
-        <a href="#contact" class="text-slate-200 hover:bg-gray-400 pb-1" @click="close">Kapcsolat</a>
+        <a href="#contact" class="text-slate-200 hover:bg-gray-400 pb-1 border-b border-gray-200/20" @click="close">Kapcsolat</a>
+        <a href="#blog" class="text-slate-200 hover:bg-gray-400 pb-1" @click="close">Blog</a>
       </div>
     </div>
   </nav>
