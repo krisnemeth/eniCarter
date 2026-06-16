@@ -5,34 +5,18 @@ import ImageCarouselFullScreen from './ImageCarouselFullScreen.vue'
 import Button from './Button.vue'
 import { supabase, type GalleryImage } from '../lib/supabase'
 
-// Local fallback images (used when no Supabase gallery images exist yet)
-const localFreshFiles = [
-  'Artwork-1.jpeg','Artwork-2.jpeg','Artwork-3.jpeg','Artwork-4.jpeg','Artwork-5.jpeg',
-  'Artwork-6.jpeg','Artwork-7.jpeg','Artwork-8.jpeg','Artwork-9.jpeg','Artwork-10.jpeg',
-  'Artwork-11.jpeg','Artwork-12.jpeg','Artwork-13.jpeg','Artwork-14.jpeg','Artwork-15.jpeg',
-  'Artwork-16.jpeg','Artwork-17.jpeg','Artwork-18.jpeg','Artwork-19.jpeg','Artwork-20.jpeg',
-]
-
-const localDesignFiles = [
-  'CowSkull.png','DeathMoth.png','Floral.png','Gingko.png','Mice.png','Oni.png',
-  'OrnamentalFace.png','OrnamentalHeart.png','OrnamentalSkull.png','SpiderLily.png',
-  'ThistleBird.png','ThistleSkull.png','Twoface.png',
-]
-
-const localFreshImages = localFreshFiles.map(f => new URL(`../assets/img/TattooImg/Fresh/${f}`, import.meta.url).href)
-const localDesignImages = localDesignFiles.map(f => new URL(`../assets/img/TattooImg/Designs/${f}`, import.meta.url).href)
-
+// Gallery images are served from Supabase Storage (seeded into the
+// gallery_images table); there is no local image fallback.
 const remoteImages = ref<GalleryImage[]>([])
+const loaded = ref(false)
 
-const TattooImages = computed(() => {
-  const remote = remoteImages.value.filter(i => i.category === 'fresh')
-  return remote.length > 0 ? remote.map(i => i.url) : localFreshImages
-})
+const TattooImages = computed(() =>
+  remoteImages.value.filter(i => i.category === 'fresh').map(i => i.url),
+)
 
-const designs = computed(() => {
-  const remote = remoteImages.value.filter(i => i.category === 'designs')
-  return remote.length > 0 ? remote.map(i => i.url) : localDesignImages
-})
+const designs = computed(() =>
+  remoteImages.value.filter(i => i.category === 'designs').map(i => i.url),
+)
 
 onMounted(async () => {
   const { data } = await supabase
@@ -41,6 +25,7 @@ onMounted(async () => {
     .eq('visible', true)
     .order('sort_order', { ascending: true })
   if (data) remoteImages.value = data as GalleryImage[]
+  loaded.value = true
 })
 </script>
 
@@ -54,14 +39,16 @@ onMounted(async () => {
 
         <div class="flex flex-col items-center justify-center w-full h-full">
           <div class="w-full h-full max-h-[400px]">
-            <ImageCarouselFullScreen :images="TattooImages" caption="Kész tetoválások" />
+            <ImageCarouselFullScreen v-if="TattooImages.length" :images="TattooImages" caption="Kész tetoválások" />
+            <div v-else-if="loaded" class="flex items-center justify-center h-full min-h-[300px] text-gray-400 text-sm">Hamarosan...</div>
           </div>
         </div>
         <div class="md:hidden"></div>
 
         <div class="flex flex-col items-center justify-center w-full h-full">
           <div class="w-full h-full max-h-[400px]">
-            <ImageCarouselFullScreen :images="designs" caption="Egyedi minták" />
+            <ImageCarouselFullScreen v-if="designs.length" :images="designs" caption="Egyedi minták" />
+            <div v-else-if="loaded" class="flex items-center justify-center h-full min-h-[300px] text-gray-400 text-sm">Hamarosan...</div>
           </div>
         </div>
 
