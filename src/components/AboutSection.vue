@@ -5,11 +5,11 @@ import ImageCarousel from './ImageCarousel.vue'
 
 // Import all images dynamically
 const imageFiles = [
-  'KATA4628.jpg',
-  'KATA4459.jpg',
-  'KATA3548.jpg',
-  'KATA3659.jpg',
-  'KATA4064.jpg'
+  'KATA4628.webp',
+  'KATA4459.webp',
+  'KATA3548.webp',
+  'KATA3659.webp',
+  'KATA4064.webp'
 ]
 
 const images = computed(() => {

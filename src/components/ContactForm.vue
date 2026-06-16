@@ -137,7 +137,7 @@ onUnmounted(() => {
         </div>
 
         <div class="hidden md:flex flex-col items-center justify-center w-full h-full">
-          <img src="../assets/img/Vertical/KATA3795.jpg" alt="Image of Lucky Cat" class="h-[450px] w-full object-cover object-[25%_75%] rounded-xl overflow-hidden border border-gray-900" />
+          <img src="../assets/img/Vertical/KATA3795.webp" alt="Image of Lucky Cat" class="h-[450px] w-full object-cover object-[25%_75%] rounded-xl overflow-hidden border border-gray-900" />
         </div>
       </div>
     </div>

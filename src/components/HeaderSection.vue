@@ -2,8 +2,8 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import Button from './Button.vue'
 
-const mobileBgUrl = new URL('../assets/img/Vertical/KATA4524.jpg', import.meta.url).href
-const desktopBgUrl = new URL('../assets/img/Vertical/About/KATA4614.jpg', import.meta.url).href
+const mobileBgUrl = new URL('../assets/img/Vertical/KATA4524.webp', import.meta.url).href
+const desktopBgUrl = new URL('../assets/img/Vertical/About/KATA4614.webp', import.meta.url).href
 
 const isDesktop = ref(false)
 

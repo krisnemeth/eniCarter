@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { supabase, type Post, type GalleryImage } from '../lib/supabase'
+import { toWebp } from '../lib/image'
 import type { User } from '@supabase/supabase-js'
 import SectionTitle from '../components/SectionTitle.vue'
 
@@ -59,11 +60,12 @@ async function uploadCover(e: Event) {
   coverUploading.value = true
   postError.value = null
 
-  const file = input.files[0]
-  const ext = file.name.split('.').pop()
-  const path = `blog/${Date.now()}.${ext}`
+  const file = await toWebp(input.files[0])
+  const path = `blog/${Date.now()}.webp`
 
-  const { error: uploadErr } = await supabase.storage.from('gallery').upload(path, file)
+  const { error: uploadErr } = await supabase.storage
+    .from('gallery')
+    .upload(path, file, { contentType: 'image/webp' })
   if (uploadErr) {
     postError.value = uploadErr.message
   } else {
@@ -186,11 +188,12 @@ async function uploadImage(e: Event) {
   const maxOrder = galleryImages.value.filter(i => i.category === uploadCategory.value).length
 
   for (let i = 0; i < files.length; i++) {
-    const file = files[i]
-    const ext = file.name.split('.').pop()
-    const path = `${uploadCategory.value}/${Date.now()}_${i}.${ext}`
+    const file = await toWebp(files[i])
+    const path = `${uploadCategory.value}/${Date.now()}_${i}.webp`
 
-    const { error: uploadErr } = await supabase.storage.from('gallery').upload(path, file)
+    const { error: uploadErr } = await supabase.storage
+      .from('gallery')
+      .upload(path, file, { contentType: 'image/webp' })
     if (uploadErr) { uploadError.value = uploadErr.message; continue }
 
     const { data: urlData } = supabase.storage.from('gallery').getPublicUrl(path)
