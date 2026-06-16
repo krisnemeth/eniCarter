@@ -38,7 +38,7 @@ onMounted(async () => {
       <div class="grid grid-cols-1 md:grid-cols-2 items-center justify-center w-full gap-4 md:gap-8">
 
         <div class="flex flex-col items-center justify-center w-full h-full">
-          <div class="w-full h-full max-h-[400px]">
+          <div class="w-full h-[384px] md:h-[400px]">
             <ImageCarouselFullScreen v-if="TattooImages.length" :images="TattooImages" caption="Kész tetoválások" />
             <div v-else-if="loaded" class="flex items-center justify-center h-full min-h-[300px] text-gray-400 text-sm">Hamarosan...</div>
           </div>
@@ -46,7 +46,7 @@ onMounted(async () => {
         <div class="md:hidden"></div>
 
         <div class="flex flex-col items-center justify-center w-full h-full">
-          <div class="w-full h-full max-h-[400px]">
+          <div class="w-full h-[384px] md:h-[400px]">
             <ImageCarouselFullScreen v-if="designs.length" :images="designs" caption="Egyedi minták" />
             <div v-else-if="loaded" class="flex items-center justify-center h-full min-h-[300px] text-gray-400 text-sm">Hamarosan...</div>
           </div>
