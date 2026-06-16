@@ -146,12 +146,15 @@ onUnmounted(() => {
     @mousedown="handleMouseDown"
   >
     <!-- Image Container -->
-    <div class="relative w-full h-full">
-      <img 
-        :src="currentImage" 
-        :alt="`Image ${currentIndex + 1} of ${images.length}`"
-        class="w-full h-96 md:h-full object-cover transition-opacity duration-300 ease-in-out"
-        :class="{ 'opacity-98': !isTransitioning, 'opacity-100': isTransitioning }"
+    <!-- All images render stacked so they preload; navigating toggles opacity. -->
+    <div class="relative w-full h-96 md:h-full">
+      <img
+        v-for="(image, index) in images"
+        :key="index"
+        :src="image"
+        :alt="`Image ${index + 1} of ${images.length}`"
+        class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-in-out"
+        :class="index === currentIndex ? 'opacity-100 z-[1]' : 'opacity-0 z-0 pointer-events-none'"
       />
     </div>
 
