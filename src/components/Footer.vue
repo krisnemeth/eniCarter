@@ -4,13 +4,14 @@
       <div class="flex flex-col items-center justify-center h-full space-y-2">
         <div class="font-gothic-rhapsody text-3xl tracking-wide">TW</div>
         <p class="text-xs text-gray-400">©Tinywitch.ttt {{ Year }}</p>
+        <RouterLink to="/admin" class="text-xs text-gray-400 underline">Admin</RouterLink>
       </div>
     </footer>
   </div>
 </template>
 
 <script setup>
-import { Icon } from '@iconify/vue'
+import { RouterLink } from 'vue-router'
 
 const Year = new Date().getFullYear()
 </script>
