@@ -17,3 +17,10 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .DS_Store
+
+# editor / local tooling
+.idea
+.claude
+
+# supabase cli temp
+supabase/.temp

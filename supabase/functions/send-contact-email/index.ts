@@ -36,7 +36,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'EniCarter <noreply@resend.dev>',
+        from: 'EniCarter <onboarding@resend.dev>',
         to: [NOTIFY_EMAIL],
         reply_to: email,
         subject: `Új üzenet: ${name}`,

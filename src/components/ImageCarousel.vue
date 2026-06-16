@@ -139,7 +139,7 @@ onUnmounted(() => {
 
 <template>
   <div 
-    class="relative w-full h-full overflow-hidden rounded-lg border border-black"
+    class="relative w-full h-full overflow-hidden rounded-lg border border-black shadow-sm shadow-gray-950"
     @touchstart="handleTouchStart"
     @touchmove="handleTouchMove"
     @touchend="handleTouchEnd"
