@@ -1,0 +1,3 @@
+# SPA fallback: let vue-router handle client-side routes so direct visits
+# and refreshes on /blog/:slug, /admin, etc. don't 404 on Netlify.
+/*    /index.html   200

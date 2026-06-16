@@ -31,6 +31,7 @@ onMounted(async () => {
 
   if (data) {
     post.value = data as Post
+    document.title = `${post.value.title} – Eni Carter`
   } else {
     notFound.value = true
   }
