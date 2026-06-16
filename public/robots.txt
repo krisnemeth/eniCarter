@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://enicarter.com/sitemap.xml
+Sitemap: https://tinywitchttt.com/sitemap.xml
