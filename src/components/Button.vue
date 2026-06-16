@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { withDefaults, defineProps } from 'vue'
-
-const props = withDefaults(defineProps<{ 
+const props = withDefaults(defineProps<{
   buttonText?: string
   link?: string
 }>(), {
