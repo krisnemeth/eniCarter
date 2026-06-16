@@ -37,6 +37,24 @@ Small project — **push directly to `main`**. No feature-branch workflow needed
 
 ## What still needs to happen before going live
 
+### 0. TODO (next session) — Replace magic-link admin auth with seeded password logins
+**Why:** `AdminView.vue` (`sendMagicLink()`, line ~19) uses `supabase.auth.signInWithOtp()`.
+Two problems found 2026-06-16:
+1. Supabase's default shared email service (used until custom SMTP is configured) caps
+   auth emails at a very low rate — this is why the client got locked out and could only
+   get in after the limit window reset.
+2. Bigger issue: `signInWithOtp()` defaults `shouldCreateUser` to `true`, so **any email
+   address can request a magic link and create itself a new authenticated account** with
+   access to `/admin`. This is a real access-control gap, not just an inconvenience.
+
+**Plan (owner will implement):**
+- Seed exactly two users in Supabase Authentication → Users: one for the client, one for the dev
+- Replace the magic-link form in `AdminView.vue` with a plain email + password login
+  (`supabase.auth.signInWithPassword`)
+- Disable public signups in Supabase Auth settings (or otherwise ensure no new accounts
+  can self-provision) so `/admin` access is strictly limited to the two seeded users
+- Custom SMTP (Resend) for Supabase Auth emails becomes unnecessary once magic link is removed
+
 ### 1. Supabase project setup (client does this once)
 - Create a Supabase project at supabase.com
 - Run the migrations in `supabase/migrations/` (in order) in the SQL editor
