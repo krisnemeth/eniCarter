@@ -10,6 +10,7 @@ export type Post = {
   title: string
   slug: string
   body: string
+  cover_image: string | null
   published: boolean
   published_at: string | null
   created_at: string

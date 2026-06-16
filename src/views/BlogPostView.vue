@@ -59,6 +59,13 @@ onMounted(async () => {
           <p class="text-xs text-gray-500">{{ formatDate(post.published_at ?? post.created_at) }}</p>
         </div>
 
+        <img
+          v-if="post.cover_image"
+          :src="post.cover_image"
+          :alt="post.title"
+          class="w-full rounded-lg border border-gray-300 mb-8 object-cover"
+        />
+
         <!-- Rendered markdown content -->
         <div class="prose prose-gray max-w-none text-gray-700 text-sm md:text-base leading-relaxed" v-html="renderedBody" />
       </template>

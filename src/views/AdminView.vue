@@ -47,7 +47,36 @@ function slugify(title: string): string {
 }
 
 function newPost() {
-  editingPost.value = { title: '', slug: '', body: '', published: false }
+  editingPost.value = { title: '', slug: '', body: '', cover_image: null, published: false }
+}
+
+// Cover image upload for the post being edited
+const coverUploading = ref(false)
+
+async function uploadCover(e: Event) {
+  const input = e.target as HTMLInputElement
+  if (!input.files?.length || !editingPost.value) return
+  coverUploading.value = true
+  postError.value = null
+
+  const file = input.files[0]
+  const ext = file.name.split('.').pop()
+  const path = `blog/${Date.now()}.${ext}`
+
+  const { error: uploadErr } = await supabase.storage.from('gallery').upload(path, file)
+  if (uploadErr) {
+    postError.value = uploadErr.message
+  } else {
+    const { data: urlData } = supabase.storage.from('gallery').getPublicUrl(path)
+    editingPost.value.cover_image = urlData.publicUrl
+  }
+
+  input.value = ''
+  coverUploading.value = false
+}
+
+function removeCover() {
+  if (editingPost.value) editingPost.value.cover_image = null
 }
 
 function editPost(post: Post) {
@@ -78,6 +107,7 @@ async function savePost() {
     title: editingPost.value.title.trim(),
     slug: editingPost.value.slug.trim(),
     body: editingPost.value.body.trim(),
+    cover_image: editingPost.value.cover_image ?? null,
     published: editingPost.value.published ?? false,
     published_at: editingPost.value.published
       ? (editingPost.value.published_at ?? new Date().toISOString())
@@ -321,6 +351,31 @@ onMounted(async () => {
                 type="text"
                 class="block w-full rounded-md border border-gray-400 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-950 bg-gray-100 font-mono"
               />
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-gray-500 mb-1">Borítókép</label>
+              <div v-if="editingPost.cover_image" class="mb-2">
+                <div class="relative inline-block">
+                  <img :src="editingPost.cover_image" alt="Borítókép" class="h-32 w-auto rounded-md border border-gray-400 object-cover" />
+                  <button
+                    type="button"
+                    @click="removeCover"
+                    class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-6 h-6 text-xs flex items-center justify-center shadow hover:bg-red-700"
+                    title="Borítókép eltávolítása"
+                  >✕</button>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <input
+                  type="file"
+                  accept="image/*"
+                  :disabled="coverUploading"
+                  class="text-sm text-gray-700 file:mr-3 file:py-1.5 file:px-4 file:rounded-md file:border-0 file:bg-gray-950 file:text-gray-200 file:text-xs file:cursor-pointer hover:file:opacity-90 disabled:opacity-50"
+                  @change="uploadCover"
+                />
+                <span v-if="coverUploading" class="text-xs text-gray-500">Feltöltés...</span>
+              </div>
             </div>
 
             <div>
