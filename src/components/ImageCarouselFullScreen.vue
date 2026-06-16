@@ -237,6 +237,11 @@ onUnmounted(() => {
   document.removeEventListener('mousemove', handleMouseMove)
   document.removeEventListener('mouseup', handleMouseUp)
   window.removeEventListener('keydown', handleKeydown)
+  // navigating away while the fullscreen viewer is open must not leave the
+  // page permanently scroll-locked
+  if (isFullscreen.value) {
+    document.body.style.overflow = ''
+  }
 })
 </script>
 
