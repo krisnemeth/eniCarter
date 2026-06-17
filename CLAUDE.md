@@ -27,6 +27,7 @@ Small project — **push directly to `main`**. No feature-branch workflow needed
 | Gallery served exclusively from Supabase Storage (local fallback removed) | ✅ Done |
 | Images optimized to WebP, auto-convert on admin upload | ✅ Done |
 | Admin panel (`/admin`) — gallery + blog management | ✅ Done |
+| Admin auth: email + password login (`signInWithPassword`), public signups disabled, two seeded accounts | ✅ Done |
 | Blog: list view (`/blog`), full post view (`/blog/:slug`), cover images | ✅ Done |
 | SEO: meta tags, social share image (1.91:1 crop), canonical domain, favicon, sitemap, SPA redirect | ✅ Done |
 | Guard against missing Supabase env vars (no blank-page crash) | ✅ Done |
@@ -37,23 +38,16 @@ Small project — **push directly to `main`**. No feature-branch workflow needed
 
 ## What still needs to happen before going live
 
-### 0. TODO (next session) — Replace magic-link admin auth with seeded password logins
-**Why:** `AdminView.vue` (`sendMagicLink()`, line ~19) uses `supabase.auth.signInWithOtp()`.
-Two problems found 2026-06-16:
-1. Supabase's default shared email service (used until custom SMTP is configured) caps
-   auth emails at a very low rate — this is why the client got locked out and could only
-   get in after the limit window reset.
-2. Bigger issue: `signInWithOtp()` defaults `shouldCreateUser` to `true`, so **any email
-   address can request a magic link and create itself a new authenticated account** with
-   access to `/admin`. This is a real access-control gap, not just an inconvenience.
-
-**Plan (owner will implement):**
-- Seed exactly two users in Supabase Authentication → Users: one for the client, one for the dev
-- Replace the magic-link form in `AdminView.vue` with a plain email + password login
-  (`supabase.auth.signInWithPassword`)
-- Disable public signups in Supabase Auth settings (or otherwise ensure no new accounts
-  can self-provision) so `/admin` access is strictly limited to the two seeded users
-- Custom SMTP (Resend) for Supabase Auth emails becomes unnecessary once magic link is removed
+### 0. ✅ DONE (2026-06-17) — Admin auth is now email + password, signups disabled
+Magic-link auth (`signInWithOtp`, `shouldCreateUser` defaulted true → anyone could
+self-provision an `/admin` account) has been replaced with `signInWithPassword`.
+- `AdminView.vue` shows a login-only form (email + password); no signup UI exists.
+- Two accounts are seeded with passwords: `enitatts@gmail.com` (client) and
+  `krsnmth@gmail.com` (dev). Both email-confirmed.
+- Public signups disabled in Supabase Auth (`disable_signup: true`, verified via
+  `/auth/v1/settings`), so `/admin` is limited to those two accounts. New accounts
+  must be added manually in Supabase → Authentication → Users.
+- Supabase MCP server wired into `.mcp.json` (OAuth) for DB/admin tasks.
 
 ### 1. Supabase project setup (client does this once)
 - Create a Supabase project at supabase.com
