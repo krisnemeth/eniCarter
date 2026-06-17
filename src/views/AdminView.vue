@@ -30,9 +30,17 @@ async function signIn() {
 }
 
 async function signOut() {
-  await supabase.auth.signOut()
-  user.value = null
-  activeTab.value = 'blog'
+  // scope:'local' clears the browser session without the global /logout
+  // round-trip, which can throw if the stored refresh token is already
+  // invalid. Reset UI state in finally so logout always lands on the form.
+  try {
+    await supabase.auth.signOut({ scope: 'local' })
+  } catch {
+    // session may already be gone server-side; clearing local state is enough
+  } finally {
+    user.value = null
+    activeTab.value = 'blog'
+  }
 }
 
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
