@@ -8,18 +8,24 @@ import SectionTitle from '../components/SectionTitle.vue'
 // ─── Auth ────────────────────────────────────────────────────────────────────
 const user = ref<User | null>(null)
 const authEmail = ref('')
+const authPassword = ref('')
 const authLoading = ref(false)
 const authMessage = ref<{ type: 'success' | 'error'; text: string } | null>(null)
 const authChecking = ref(true)
 
-async function sendMagicLink() {
-  if (!authEmail.value.trim()) return
+async function signIn() {
+  if (!authEmail.value.trim() || !authPassword.value) return
   authLoading.value = true
   authMessage.value = null
-  const { error } = await supabase.auth.signInWithOtp({ email: authEmail.value.trim() })
-  authMessage.value = error
-    ? { type: 'error', text: error.message }
-    : { type: 'success', text: 'Ellenőrizd az e-mail fiókodat a belépési linkért!' }
+  const { error } = await supabase.auth.signInWithPassword({
+    email: authEmail.value.trim(),
+    password: authPassword.value,
+  })
+  if (error) {
+    authMessage.value = { type: 'error', text: 'Hibás email cím vagy jelszó.' }
+  } else {
+    authPassword.value = ''
+  }
   authLoading.value = false
 }
 
@@ -284,23 +290,34 @@ onMounted(async () => {
         <SectionTitle title="Admin belépés" />
         <div class="max-w-sm mx-auto mt-12">
           <div class="bg-gray-200 border border-gray-900 rounded-xl p-6 space-y-4">
-            <p class="text-sm text-gray-600">Add meg az email címedet, és küldünk egy belépési linket.</p>
+            <p class="text-sm text-gray-600">Add meg az email címedet és a jelszavadat a belépéshez.</p>
             <div>
               <label class="block text-xs font-medium text-gray-500 mb-1">Email</label>
               <input
                 v-model="authEmail"
                 type="email"
+                autocomplete="username"
                 placeholder="te@example.com"
                 class="block w-full rounded-md border border-gray-400 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-950 bg-gray-100"
-                @keyup.enter="sendMagicLink"
+                @keyup.enter="signIn"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-500 mb-1">Jelszó</label>
+              <input
+                v-model="authPassword"
+                type="password"
+                autocomplete="current-password"
+                class="block w-full rounded-md border border-gray-400 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-950 bg-gray-100"
+                @keyup.enter="signIn"
               />
             </div>
             <button
-              @click="sendMagicLink"
+              @click="signIn"
               :disabled="authLoading"
               class="w-full px-5 py-2.5 rounded-md bg-gray-950 text-gray-200 text-sm hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed transition shadow-md"
             >
-              {{ authLoading ? 'Küldés...' : 'Magic link küldése' }}
+              {{ authLoading ? 'Belépés...' : 'Belépés' }}
             </button>
             <p v-if="authMessage" :class="authMessage.type === 'success' ? 'text-green-700' : 'text-red-600'" class="text-xs">
               {{ authMessage.text }}
