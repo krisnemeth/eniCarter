@@ -13,6 +13,11 @@ Vue 3 + Vite + TypeScript + Tailwind CSS 4 + Supabase.
 ## Branch policy
 Small project — **push directly to `main`**. No feature-branch workflow needed.
 
+## Conventions
+- **No placeholder text on form inputs, anywhere in the app.** Use a visible `<label>`
+  for every field instead of an input `placeholder`. Applies to all current and future
+  forms (login, contact, admin editors, etc.).
+
 ---
 
 ## What's been built
@@ -68,6 +73,12 @@ self-provision an `/admin` account) has been replaced with `signInWithPassword`.
   supabase secrets set CONTACT_NOTIFY_EMAIL=enitatts@gmail.com
   ```
 - Deploy: `supabase functions deploy send-contact-email`
+
+### 2.5 Placeholder blog post (delete when no longer needed)
+A published placeholder post exists purely as a layout test bed for `BlogPostView.vue`:
+slug `madarak-es-mehek` ("A madarak és a méhek"), ~238-char Hungarian body with an `##`
+subheading + italic, plus a cover image. Created directly in the DB. Remove it via
+`/admin` → Blog → delete once the real first post is written / layout work is done.
 
 ### 3. Possible follow-ups
 - **About section images** are still hardcoded local assets — could move to Supabase Storage so they're admin-manageable too

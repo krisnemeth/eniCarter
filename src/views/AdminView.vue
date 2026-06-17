@@ -305,7 +305,6 @@ onMounted(async () => {
                 v-model="authEmail"
                 type="email"
                 autocomplete="username"
-                placeholder="te@example.com"
                 class="block w-full rounded-md border border-gray-400 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-950 bg-gray-100"
                 @keyup.enter="signIn"
               />
